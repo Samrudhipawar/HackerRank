@@ -1,23 +1,23 @@
-#!/bin/python3
-
-import sys
-
-def flatlandSpaceStations(n, stations):
-    stations = sorted(stations)
-    res = stations[0]
+def flatland(n, m, space_stations):
+    space_stations.sort()
+    max_dist = 0
     
-    for ind in range(1, len(stations)):
-        res = max(res, (stations[ind] - stations[ind-1])//2)
-        
-    res = max(res, n-1 - stations[-1])
-        
-    return res
-        
+    # Distance to the nearest space station for the first city to the first space station
+    max_dist = space_stations[0]
     
+    # Check the distances between consecutive space stations
+    for i in range(1, m):
+        dist = (space_stations[i] - space_stations[i - 1]) // 2
+        if dist > max_dist:
+            max_dist = dist
+    
+    # Distance to the nearest space station for the last city to the last space station
+    dist = n - 1 - space_stations[-1]
+    if dist > max_dist:
+        max_dist = dist
+    
+    print(max_dist)
 
-if __name__ == "__main__":
-    n, m = input().strip().split(' ')
-    n, m = [int(n), int(m)]
-    c = list(map(int, input().strip().split(' ')))
-    result = flatlandSpaceStations(n, c)
-    print(result)
+n, m = map(int, input().split())
+space_stations = list(map(int, input().split()))
+flatland(n, m, space_stations)
